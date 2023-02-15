@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block titlepage %}
+Welcome
+{% endblock %}
+
+{% block mycontent %}
+This is welcome page!
+<a class="btn btn-primary" href="{% url 'login_page' %}">Login here</a>
+{% endblock %}
