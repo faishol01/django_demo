@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block titlepage %}
+Profile
+{% endblock %}
+
+{% block mycontent %}
+<h2>Profile</h2>
+<form action="{% url 'profile_page' username=user.username %}">
+    <div class="mb-3">
+      <label for="username_field" class="form-label">Username</label>
+      <input type="text" class="form-control" id="username_field" name="username" value="{{user.username}}">
+    </div>
+    <div class="mb-3">
+      <label for="password_field" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password_field" name="password"  value="{{user.password}}">
+    </div>
+    <div class="mb-3">
+      <label for="age_field" class="form-label">Age</label>
+      <input type="number" class="form-control" id="age_field" name="age" value="{{user.age}}">
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="{% url 'delete_account' username=user.username %}" class="btn btn-danger">Delete my account</a>
+</form>
+{% endblock %}

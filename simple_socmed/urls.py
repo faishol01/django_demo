@@ -19,6 +19,9 @@ import portal.views
 
 urlpatterns = [
     path('', portal.views.index),
+    path('account/register/', portal.views.register_view, name='register_page'),
     path('account/login/', portal.views.login_view, name='login_page'),
+    path('profile/<str:username>/', portal.views.profile_view, name='profile_page'),
+    path('delete/<str:username>/', portal.views.delete_account_view, name='delete_account'),
     path('admin/', admin.site.urls),
 ]
