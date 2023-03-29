@@ -9,7 +9,8 @@ Login
 {% if err_msg %}
 <span>{{ err_msg }}</span>
 {% endif %}
-<form action="{% url 'login_page' %}">
+<form method="POST" action="{% url 'login_page' %}">
+    {% csrf_token %}
     <div class="mb-3">
       <label for="username_field" class="form-label">Username</label>
       <input type="text" class="form-control" id="username_field" name="username">

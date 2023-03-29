@@ -12,11 +12,12 @@ def index(request):
 
 def login_view(request):
     context = dict()
-    if len(request.GET) > 0:
-        username = request.GET['username']
-        password = request.GET['password']
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
         try:
             user = UserAccount.objects.get(username = username)
+            request.session['username'] = user.username
             if user.password == password:
                 return redirect(f'/profile/{username}')
         except:
@@ -24,16 +25,19 @@ def login_view(request):
     return render(request, "login.html", context=context)
 
 def register_view(request):
-    if len(request.GET) > 0:
-        username = request.GET['username']
-        password = request.GET['password']
-        age = int(request.GET['age'])
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        age = int(request.POST['age'])
 
         userAcc = UserAccount(username=username, password=password, age=age)
         userAcc.save()
+        return redirect('/account/login')
     return render(request, "register.html")
 
 def profile_view(request, username):
+    if request.session.get('username', "") != username:
+        return HttpResponse("Forbidden", status=403)
     user = UserAccount.objects.get(username=username)
     if len(request.GET) > 0:
         username = request.GET['username']
@@ -50,3 +54,7 @@ def delete_account_view(request, username):
     user = UserAccount.objects.get(username=username)
     user.delete()
     return redirect('account/login/')
+
+def logout_view(request):
+    request.session.flush()
+    return redirect('/account/login')
